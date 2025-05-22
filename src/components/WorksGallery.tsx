@@ -1,0 +1,193 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { Work } from '@/lib/fetchWorks';
+
+export default function WorksGallery({ works }: { works: Work[] }) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = modalOpen ? 'hidden' : '';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [modalOpen]);
+
+  const openModal = (index: number) => {
+    setCurrentIndex(index);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setModalOpen(false);
+      setCurrentIndex(null);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const switchImage = (direction: 'prev' | 'next') => {
+    if (currentIndex === null) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      const nextIndex =
+        direction === 'prev'
+          ? (currentIndex - 1 + works.length) % works.length
+          : (currentIndex + 1) % works.length;
+      setCurrentIndex(nextIndex);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  return (
+    <>
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+        {works.map((work, index) => (
+          <div
+            key={work.id}
+            className="relative group cursor-pointer"
+            onClick={() => openModal(index)}
+          >
+            {work.image?.url && (
+              <Image
+                src={work.image.url}
+                alt=""
+                width={500}
+                height={500}
+                className="object-cover w-full transition-transform duration-300 transform group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {modalOpen && currentIndex !== null && (
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
+            isTransitioning ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={closeModal}
+          ></div>
+
+          <div
+            className="relative z-10 bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-lg transition-opacity duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-4 text-2xl text-gray-700 hover:text-black"
+              aria-label="Close"
+            >
+              ×
+            </button>
+
+            <button
+              onClick={() => switchImage('prev')}
+              className="fixed left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 w-10 h-10 rounded-full shadow hover:bg-gray-200 z-20"
+            >
+              ◀
+            </button>
+
+            <button
+              onClick={() => switchImage('next')}
+              className="fixed right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 w-10 h-10 rounded-full shadow hover:bg-gray-200 z-20"
+            >
+              ▶
+            </button>
+
+            {/* モーダル内容 */}
+            <Image
+              src={works[currentIndex].image?.url || '/placeholder.jpg'}
+              alt={works[currentIndex].title || 'Work Image'}
+              width={1200}
+              height={800}
+              className={`w-full h-auto rounded-md mb-4 transition-opacity duration-300 ${
+                isTransitioning ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
+
+            <div className="text-gray-800 space-y-3">
+              {works[currentIndex].title && (
+                <h3 className="text-2xl font-semibold">
+                  {works[currentIndex].title}
+                </h3>
+              )}
+
+              {works[currentIndex].description && (
+                <p className="text-sm leading-relaxed whitespace-pre-line">
+                  {works[currentIndex].description}
+                </p>
+              )}
+
+              {works[currentIndex].technologies && (
+                <div>
+                  <h4 className="font-semibold">Technologies</h4>
+                  <p className="whitespace-pre-line">
+                    {works[currentIndex].technologies}
+                  </p>
+                </div>
+              )}
+
+              {works[currentIndex].role && (
+                <div>
+                  <h4 className="font-semibold">Role</h4>
+                  <p>{works[currentIndex].role}</p>
+                </div>
+              )}
+
+              {works[currentIndex].duration && (
+                <div>
+                  <h4 className="font-semibold">Duration</h4>
+                  <p>{works[currentIndex].duration}</p>
+                </div>
+              )}
+
+              {works[currentIndex].challenges && (
+                <div>
+                  <h4 className="font-semibold">Challenges</h4>
+                  <p className="whitespace-pre-line">
+                    {works[currentIndex].challenges}
+                  </p>
+                </div>
+              )}
+
+              {(works[currentIndex].url || works[currentIndex].github) && (
+                <div className="space-x-4 mt-4">
+                  {works[currentIndex].url && (
+                    <a
+                      href={works[currentIndex].url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      View Site
+                    </a>
+                  )}
+                  {works[currentIndex].github && (
+                    <a
+                      href={works[currentIndex].github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      GitHub
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
