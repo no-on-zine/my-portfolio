@@ -1,16 +1,44 @@
 // components/FadeIn.tsx
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 
-export default function FadeIn({ children }: { children: React.ReactNode }) {
+export default function FadeIn({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [delay]);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+    <div
+      ref={ref}
+      className={`transition-opacity transform duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      } ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Work } from '@/lib/fetchWorks';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useInView } from '@/hooks/useInView';
 
 export default function WorksGallery({ works }: { works: Work[] }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,28 +50,38 @@ export default function WorksGallery({ works }: { works: Work[] }) {
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-        {works.map((work, index) => (
-          <div
-            key={work.id}
-            className="relative group cursor-pointer"
-            onClick={() => openModal(index)}
-          >
-            {work.image?.url && (
-              <Image
-                src={work.image.url}
-                alt=""
-                width={500}
-                height={500}
-                className="object-cover w-full transition-transform duration-300 transform group-hover:scale-105 filter grayscale group-hover:grayscale-0"
-              />
-            )}
-          </div>
-        ))}
+        {works.map((work, index) => {
+          const { ref, isInView } = useInView(); // 各要素で呼び出し
+
+          return (
+            <div
+              key={work.id}
+              ref={ref}
+              className={`relative group cursor-pointer transition-all duration-700 ease-out transform ${
+                isInView
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-6'
+              }`}
+              style={{ transitionDelay: `${index * 0.1}s` }}
+              onClick={() => openModal(index)}
+            >
+              {work.image?.url && (
+                <Image
+                  src={work.image.url}
+                  alt=""
+                  width={500}
+                  height={500}
+                  className="object-cover w-full transition-transform duration-300 transform group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {modalOpen && currentIndex !== null && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${
+          className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 break-all animate-fade-in ${
             isTransitioning ? 'opacity-0' : 'opacity-100'
           }`}
         >
@@ -84,24 +96,26 @@ export default function WorksGallery({ works }: { works: Work[] }) {
           >
             <button
               onClick={closeModal}
-              className="absolute top-2 right-4 text-2xl text-gray-700 hover:text-black"
               aria-label="Close"
+              className="absolute top-2 right-4 text-gray-700 hover:text-black"
             >
-              ×
+              <X className="w-6 h-6" />
             </button>
 
             <button
               onClick={() => switchImage('prev')}
-              className="fixed left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 w-10 h-10 rounded-full shadow hover:bg-gray-200 z-20"
+              aria-label="Previous"
+              className="fixed left-2 top-1/2 transform -translate-y-1/2 bg-white/50 p-2 w-10 h-10 rounded-full shadow hover:bg-gray-200 z-20"
             >
-              ◀
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             <button
               onClick={() => switchImage('next')}
-              className="fixed right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 w-10 h-10 rounded-full shadow hover:bg-gray-200 z-20"
+              aria-label="Next"
+              className="fixed right-2 top-1/2 transform -translate-y-1/2 bg-white/50 p-2 w-10 h-10 rounded-full shadow hover:bg-gray-200 z-20"
             >
-              ▶
+              <ChevronRight className="w-5 h-5" />
             </button>
 
             {/* モーダル内容 */}
@@ -130,7 +144,7 @@ export default function WorksGallery({ works }: { works: Work[] }) {
 
               {works[currentIndex].technologies && (
                 <div>
-                  <h4 className="font-semibold">Technologies</h4>
+                  <h4 className="font-semibold text-xl">Technologies</h4>
                   <p className="whitespace-pre-line">
                     {works[currentIndex].technologies}
                   </p>
@@ -139,21 +153,21 @@ export default function WorksGallery({ works }: { works: Work[] }) {
 
               {works[currentIndex].role && (
                 <div>
-                  <h4 className="font-semibold">Role</h4>
+                  <h4 className="font-semibold text-xl">Role</h4>
                   <p>{works[currentIndex].role}</p>
                 </div>
               )}
 
               {works[currentIndex].duration && (
                 <div>
-                  <h4 className="font-semibold">Duration</h4>
+                  <h4 className="font-semibold text-xl">Duration</h4>
                   <p>{works[currentIndex].duration}</p>
                 </div>
               )}
 
               {works[currentIndex].challenges && (
                 <div>
-                  <h4 className="font-semibold">Challenges</h4>
+                  <h4 className="font-semibold text-xl">Challenges</h4>
                   <p className="whitespace-pre-line">
                     {works[currentIndex].challenges}
                   </p>
