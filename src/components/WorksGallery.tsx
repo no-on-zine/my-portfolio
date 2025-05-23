@@ -11,6 +11,8 @@ export default function WorksGallery({ works }: { works: Work[] }) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const { ref: titleRef, isInView: isTitleInView } = useInView();
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       document.body.style.overflow = modalOpen ? 'hidden' : '';
@@ -49,6 +51,17 @@ export default function WorksGallery({ works }: { works: Work[] }) {
 
   return (
     <>
+      <h2
+        ref={titleRef}
+        className={`flex justify-center text-[clamp(50px,10vw,70px)] font-bold mb-6 transition-all duration-700 ease-out transform ${
+          isTitleInView
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-6'
+        }`}
+      >
+        Works
+      </h2>
+
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         {works.map((work, index) => {
           const { ref, isInView } = useInView(); // 各要素で呼び出し
