@@ -5,7 +5,7 @@ export default async function WorksPage() {
   const works = await fetchWorks();
 
   return (
-    <section className="works container mx-auto py-15">
+    <section className="works mx-auto py-15">
       <WorksGallery works={works} />
     </section>
   );

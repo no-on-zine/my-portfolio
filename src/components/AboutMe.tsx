@@ -9,7 +9,7 @@ export default function AboutMe() {
   const { ref: textRef, isInView: isTextInView } = useInView(); // 追加
 
   return (
-    <section className="about_me container mx-auto py-15 px-10">
+    <section className="about_me mx-auto py-15 px-10">
       <h2
         ref={titleRef}
         className={`flex justify-center text-[clamp(50px,10vw,70px)] font-bold mb-6 transition-all duration-700 ease-out transform ${
