@@ -7,7 +7,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const startingYear = 1983;
   return (
-    <footer className="flex items-center justify-center p-4 bg-white text-xs h-40 text-indigo-900/10">
+    <footer className="flex items-center justify-center p-4 text-xs h-40 text-indigo-900/10">
       <div
         ref={titleRef}
         className={`transition-all duration-700 ease-out transform ${

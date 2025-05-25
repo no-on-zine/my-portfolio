@@ -37,7 +37,7 @@ export default function AboutMe() {
 
         <p
           ref={textRef}
-          className={`text-justify whitespace-pre-line transition-all duration-700 ease-out transform ${
+          className={`text-justify whitespace-pre-line transition-all duration-700 ease-out transform max-w-xl ${
             isTextInView
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-6'
