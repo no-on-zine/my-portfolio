@@ -46,7 +46,7 @@ export default function AboutMe() {
               : 'opacity-0 translate-y-6'
           }`}
         >
-          Hi, I&apos;m <span className="font-bold">Keita Nakagawa</span>, a
+          Hi, Im <span className="font-bold">Keita Nakagawa</span>, a
           multidisciplinary creative specializing in web design, front-end
           development, direction, and photography.
           <br />
@@ -62,7 +62,7 @@ export default function AboutMe() {
           <br />
           While Japanese is my native language, I have conversational
           proficiency in English and can comfortably communicate through both
-          spoken and written correspondence. I&apos;m open to collaborating with
+          spoken and written correspondence. Im open to collaborating with
           clients worldwide.
           <br />
           <br />
