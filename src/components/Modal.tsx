@@ -1,5 +1,4 @@
-// Modal.tsx
-
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Work } from '@/lib/fetchWorks';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -19,11 +18,52 @@ export default function Modal({
   onNext,
   isTransitioning,
 }: ModalProps) {
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  // Escapeキーでモーダルを閉じる
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      } else if (e.key === 'ArrowLeft') {
+        onPrev();
+      } else if (e.key === 'ArrowRight') {
+        onNext();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose, onPrev, onNext]);
+
+  // スワイプ操作で前後移動
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.changedTouches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+    if (touchStartX.current !== null && touchEndX.current !== null) {
+      const delta = touchEndX.current - touchStartX.current;
+      const threshold = 50; // スワイプ判定のしきい値
+
+      if (delta > threshold) {
+        onPrev(); // 右にスワイプ → 前へ
+      } else if (delta < -threshold) {
+        onNext(); // 左にスワイプ → 次へ
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 animate-fade-in ${
         isTransitioning ? 'opacity-0' : 'opacity-100'
       }`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="absolute inset-0 bg-black/50" onClick={onClose}></div>
 
