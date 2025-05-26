@@ -101,7 +101,7 @@ export default function Contact() {
           Open for freelance & collaborative projects worldwide.
           <br />
           <br />
-          Let&apos;s connect and make something meaningful.
+          Lets connect and make something meaningful.
         </p>
 
         <a
@@ -119,7 +119,7 @@ export default function Contact() {
           rel="noopener noreferrer"
           style={{ transitionDelay: '0.2s' }}
         >
-          Let&apos;s Work Together
+          Lets Work Together
         </a>
 
         <div className="flex items-center gap-10">
