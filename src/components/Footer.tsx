@@ -3,7 +3,8 @@
 import { useInView } from '@/hooks/useInView';
 
 export default function Footer() {
-  const { ref: titleRef, isInView: isTitleInView } = useInView();
+  const { ref: titleRef, isInView: isTitleInView } =
+    useInView<HTMLHeadingElement>();
   const currentYear = new Date().getFullYear();
   const startingYear = 1983;
   return (
