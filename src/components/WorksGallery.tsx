@@ -62,7 +62,7 @@ export default function WorksGallery({ works }: { works: Work[] }) {
         Works
       </h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5">
         {works.map((work, index) => (
           <WorksItem
             key={work.id}
