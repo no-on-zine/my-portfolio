@@ -42,7 +42,7 @@ export default function SkillsPage() {
         Skills
       </h2>
 
-      <div className="flex flex-col gap-10 md:text-center md:max-w-6xl md:mx-auto">
+      <div className="flex flex-col gap-10 text-center max-w-6xl mx-auto">
         {skills.map((skill, index) => {
           const { ref, isInView } = useInView();
 
