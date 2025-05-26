@@ -43,7 +43,7 @@ export default function Services() {
         Services
       </h2>
 
-      <div className="flex flex-col gap-10 lg:flex-row lg:gap-20 items-baseline justify-center lg:max-w-[1440px] mx-auto">
+      <div className="flex flex-col gap-10 lg:flex-row lg:gap-20 lg:items-baseline justify-center lg:max-w-[1440px] mx-auto">
         {services.map((service, index) => (
           <ServiceItem key={index} service={service} delay={index * 100} />
         ))}
