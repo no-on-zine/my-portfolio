@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useInView } from '@/hooks/useInView';
+import ServiceItem from './ServiceItem';
 
 const services = [
   {
@@ -26,7 +26,7 @@ const services = [
   },
 ];
 
-export default function ServicesPage() {
+export default function Services() {
   const { ref: titleRef, isInView: isTitleInView } =
     useInView<HTMLHeadingElement>();
 
@@ -44,27 +44,9 @@ export default function ServicesPage() {
       </h2>
 
       <div className="flex flex-col gap-10 lg:flex-row lg:gap-20 items-baseline justify-center lg:max-w-[1440px] mx-auto">
-        {services.map((service, index) => {
-          const { ref: itemRef, isInView } = useInView<HTMLDivElement>();
-
-          return (
-            <div
-              key={index}
-              ref={itemRef}
-              className={`flex flex-col gap-y-2 items-center text-center transition-all duration-700 ease-out transform lg:flex-1 ${
-                isInView
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-6'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <Image src={service.src} alt="" width={55} height={55} />
-              <h3 className="text-lg font-bold max-w-[25ch]">
-                {service.title}
-              </h3>
-            </div>
-          );
-        })}
+        {services.map((service, index) => (
+          <ServiceItem key={index} service={service} delay={index * 100} />
+        ))}
       </div>
     </section>
   );

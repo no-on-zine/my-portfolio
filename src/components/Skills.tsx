@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
 import { useInView } from '@/hooks/useInView';
+import SkillItem from './SkillItem';
 
 const skills = [
   {
@@ -45,26 +45,14 @@ export default function SkillsPage() {
       </h2>
 
       <div className="flex flex-col gap-10 text-center max-w-6xl mx-auto">
-        {skills.map((skill, index) => {
-          const itemRef = useRef<HTMLDivElement>(null); // 修正ポイント
-          const { isInView } = useInView(itemRef); // エラー解消
-
-          return (
-            <div
-              key={index}
-              ref={itemRef}
-              className={`flex flex-col gap-y-2 transition-all duration-700 ease-out transform ${
-                isInView
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-6'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <h3 className="text-xl font-bold">{skill.title}:</h3>
-              <p>{skill.description}</p>
-            </div>
-          );
-        })}
+        {skills.map((skill, index) => (
+          <SkillItem
+            key={index}
+            title={skill.title}
+            description={skill.description}
+            delay={index * 100}
+          />
+        ))}
       </div>
     </section>
   );
