@@ -1,27 +1,28 @@
-// hooks/useInView.ts
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
-export const useInView = (threshold = 0.1) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+export function useInView<T extends HTMLElement = HTMLElement>(
+  providedRef?: React.RefObject<T | null>
+) {
   const [isInView, setIsInView] = useState(false);
+  const internalRef = useRef<T | null>(null);
+  const ref = providedRef ?? internalRef;
 
   useEffect(() => {
-    if (!ref.current) return;
+    const element = ref.current;
+    if (!element) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect(); // 一度だけ発火する
-        }
-      },
-      { threshold }
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 }
     );
 
-    observer.observe(ref.current);
+    observer.observe(element);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.unobserve(element);
+      observer.disconnect();
+    };
+  }, [ref]);
 
   return { ref, isInView };
-};
+}

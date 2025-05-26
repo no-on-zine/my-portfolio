@@ -4,9 +4,12 @@ import { useInView } from '@/hooks/useInView';
 import Image from 'next/image';
 
 export default function AboutMe() {
-  const { ref: titleRef, isInView: isTitleInView } = useInView();
-  const { ref: imageRef, isInView: isImageInView } = useInView(); // 追加
-  const { ref: textRef, isInView: isTextInView } = useInView(); // 追加
+  const { ref: titleRef, isInView: isTitleInView } =
+    useInView<HTMLHeadingElement>();
+  const { ref: imageRef, isInView: isImageInView } =
+    useInView<HTMLHeadingElement>(); // 追加
+  const { ref: textRef, isInView: isTextInView } =
+    useInView<HTMLHeadingElement>(); // 追加
 
   return (
     <section className="about_me mx-auto py-15 px-10">
@@ -43,7 +46,7 @@ export default function AboutMe() {
               : 'opacity-0 translate-y-6'
           }`}
         >
-          Hi, I'm <span className="font-bold">Keita Nakagawa</span>, a
+          Hi, I&apos;m <span className="font-bold">Keita Nakagawa</span>, a
           multidisciplinary creative specializing in web design, front-end
           development, direction, and photography.
           <br />
@@ -59,7 +62,7 @@ export default function AboutMe() {
           <br />
           While Japanese is my native language, I have conversational
           proficiency in English and can comfortably communicate through both
-          spoken and written correspondence. I'm open to collaborating with
+          spoken and written correspondence. I&apos;m open to collaborating with
           clients worldwide.
           <br />
           <br />

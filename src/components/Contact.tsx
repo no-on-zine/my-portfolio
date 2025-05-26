@@ -4,9 +4,9 @@ import { useInView } from '@/hooks/useInView';
 
 export default function Contact() {
   const elements = {
-    title: useInView(),
-    text: useInView(),
-    form: useInView(),
+    title: useInView<HTMLHeadingElement>(),
+    text: useInView<HTMLParagraphElement>(),
+    form: useInView<HTMLAnchorElement>(),
   };
 
   const socialIcons = [
@@ -101,7 +101,7 @@ export default function Contact() {
           Open for freelance & collaborative projects worldwide.
           <br />
           <br />
-          Let's connect and make something meaningful.
+          Let&apos;s connect and make something meaningful.
         </p>
 
         <a
@@ -119,7 +119,7 @@ export default function Contact() {
           rel="noopener noreferrer"
           style={{ transitionDelay: '0.2s' }}
         >
-          Let's Work Together
+          Let&apos;s Work Together
         </a>
 
         <div className="flex items-center gap-10">

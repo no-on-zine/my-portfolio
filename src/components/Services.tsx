@@ -27,7 +27,8 @@ const services = [
 ];
 
 export default function ServicesPage() {
-  const { ref: titleRef, isInView: isTitleInView } = useInView();
+  const { ref: titleRef, isInView: isTitleInView } =
+    useInView<HTMLHeadingElement>();
 
   return (
     <section className="services mx-auto py-15 px-10">
@@ -44,18 +45,18 @@ export default function ServicesPage() {
 
       <div className="flex flex-col gap-10 lg:flex-row lg:gap-20 items-baseline justify-center lg:max-w-[1440px] mx-auto">
         {services.map((service, index) => {
-          const { ref, isInView } = useInView();
+          const { ref: itemRef, isInView } = useInView<HTMLDivElement>();
 
           return (
             <div
               key={index}
-              ref={ref}
+              ref={itemRef}
               className={`flex flex-col gap-y-2 items-center text-center transition-all duration-700 ease-out transform lg:flex-1 ${
                 isInView
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-6'
               }`}
-              style={{ transitionDelay: `${index * 0.1}s` }}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <Image src={service.src} alt="" width={55} height={55} />
               <h3 className="text-lg font-bold max-w-[25ch]">

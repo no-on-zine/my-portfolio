@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Work } from '@/lib/fetchWorks';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -11,15 +11,14 @@ export default function WorksGallery({ works }: { works: Work[] }) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const { ref: titleRef, isInView: isTitleInView } = useInView();
+  const { ref: titleRef, isInView: isTitleInView } =
+    useInView<HTMLHeadingElement>();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.body.style.overflow = modalOpen ? 'hidden' : '';
-      return () => {
-        document.body.style.overflow = '';
-      };
-    }
+    document.body.style.overflow = modalOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [modalOpen]);
 
   const openModal = (index: number) => {
@@ -62,9 +61,9 @@ export default function WorksGallery({ works }: { works: Work[] }) {
         Works
       </h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {works.map((work, index) => {
-          const { ref, isInView } = useInView(); // 各要素で呼び出し
+          const { ref, isInView } = useInView<HTMLDivElement>();
 
           return (
             <div
@@ -84,7 +83,7 @@ export default function WorksGallery({ works }: { works: Work[] }) {
                   alt=""
                   width={500}
                   height={500}
-                  className="object-cover w-full transition-transform duration-300 transform group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                  className="object-cover w-full h-auto transition-transform duration-300 transform group-hover:scale-105 filter grayscale group-hover:grayscale-0"
                 />
               )}
             </div>
@@ -94,7 +93,7 @@ export default function WorksGallery({ works }: { works: Work[] }) {
 
       {modalOpen && currentIndex !== null && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 break-all animate-fade-in ${
+          className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 animate-fade-in ${
             isTransitioning ? 'opacity-0' : 'opacity-100'
           }`}
         >
@@ -133,7 +132,7 @@ export default function WorksGallery({ works }: { works: Work[] }) {
 
             {/* モーダル内容 */}
             <div className="flex flex-col lg:flex-row lg:gap-10">
-              <div className="flex-shrink-0 w-full lg:w-1/3 mb-4 lg:mb-0 lg:flex-2">
+              <div className="flex-shrink-0 w-full lg:w-1/3 mb-4 lg:mb-0">
                 <Image
                   src={works[currentIndex].image?.url || '/placeholder.jpg'}
                   alt={works[currentIndex].title || 'Work Image'}
@@ -144,7 +143,8 @@ export default function WorksGallery({ works }: { works: Work[] }) {
                   }`}
                 />
               </div>
-              <div className="text-gray-800 space-y-3 lg:flex-3">
+
+              <div className="text-gray-800 space-y-3">
                 {works[currentIndex].title && (
                   <h3 className="text-2xl font-semibold">
                     {works[currentIndex].title}
