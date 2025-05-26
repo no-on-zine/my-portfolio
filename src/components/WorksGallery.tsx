@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Work } from '@/lib/fetchWorks';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
+import WorksItem from './WorksItem';
 
 export default function WorksGallery({ works }: { works: Work[] }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -62,33 +63,14 @@ export default function WorksGallery({ works }: { works: Work[] }) {
       </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {works.map((work, index) => {
-          const { ref, isInView } = useInView<HTMLDivElement>();
-
-          return (
-            <div
-              key={work.id}
-              ref={ref}
-              className={`relative group cursor-pointer transition-all duration-700 ease-out transform ${
-                isInView
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-6'
-              }`}
-              style={{ transitionDelay: `${index * 0.1}s` }}
-              onClick={() => openModal(index)}
-            >
-              {work.image?.url && (
-                <Image
-                  src={work.image.url}
-                  alt=""
-                  width={500}
-                  height={500}
-                  className="object-cover w-full h-auto transition-transform duration-300 transform group-hover:scale-105 filter grayscale group-hover:grayscale-0"
-                />
-              )}
-            </div>
-          );
-        })}
+        {works.map((work, index) => (
+          <WorksItem
+            key={work.id}
+            work={work}
+            index={index}
+            onClick={() => openModal(index)}
+          />
+        ))}
       </div>
 
       {modalOpen && currentIndex !== null && (
