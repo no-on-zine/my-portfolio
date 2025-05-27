@@ -110,39 +110,39 @@ export default function Modal({
 
           <div className="text-gray-800 space-y-3">
             {work.title && (
-              <h3 className="text-2xl font-semibold">{work.title}</h3>
+              <h3 className="text-2xl font-semibold mb-5">{work.title}</h3>
             )}
 
             {work.description && (
-              <p className="text-sm leading-relaxed whitespace-pre-line">
+              <p className="text-sm leading-relaxed whitespace-pre-line mb-14">
                 {work.description}
               </p>
             )}
 
             {work.technologies && (
-              <div>
-                <h4 className="font-semibold text-xl">Technologies</h4>
+              <div className="mb-14">
+                <h4 className="font-semibold text-xl mb-1">Technologies</h4>
                 <p className="whitespace-pre-line">{work.technologies}</p>
               </div>
             )}
 
             {work.role && (
-              <div>
-                <h4 className="font-semibold text-xl">Role</h4>
+              <div className="mb-14">
+                <h4 className="font-semibold text-xl mb-1">Role</h4>
                 <p>{work.role}</p>
               </div>
             )}
 
             {work.duration && (
-              <div>
-                <h4 className="font-semibold text-xl">Duration</h4>
+              <div className="mb-14">
+                <h4 className="font-semibold text-xl mb-1">Duration</h4>
                 <p>{work.duration}</p>
               </div>
             )}
 
             {work.challenges && (
-              <div>
-                <h4 className="font-semibold text-xl">Challenges</h4>
+              <div className="mb-14">
+                <h4 className="font-semibold text-xl mb-1">Challenges</h4>
                 <p className="whitespace-pre-line">{work.challenges}</p>
               </div>
             )}

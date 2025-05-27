@@ -11,7 +11,8 @@ const skills = [
   },
   {
     title: 'Development',
-    description: 'HTML, SCSS, JavaScript, React, Next.js, Node.js',
+    description:
+      'HTML, SCSS, JavaScript, React, Tailwind CSS, TypeScript, Next.js, Node.js',
   },
   {
     title: 'CMS & Platforms',
