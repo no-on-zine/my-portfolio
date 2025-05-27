@@ -24,7 +24,13 @@ export default function ServiceItem({ service, delay }: Props) {
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <Image src={service.src} alt="" width={55} height={55} />
+      <Image
+        src={service.src}
+        alt=""
+        width={55}
+        height={55}
+        className="dark:invert"
+      />
       <h3 className="text-lg font-bold max-w-[25ch]">{service.title}</h3>
     </div>
   );

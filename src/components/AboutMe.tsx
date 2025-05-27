@@ -29,8 +29,8 @@ export default function AboutMe() {
           ref={imageRef as React.RefObject<HTMLImageElement>} // 型エラー回避のため明示的に型指定
           src="/images/home/about_me/about_me.jpg"
           alt=""
-          width={295}
-          height={295}
+          width={200}
+          height={200}
           className={`rounded-full object-cover filter grayscale hover:grayscale-0 transition-all duration-300 ease-in-out transform ${
             isImageInView
               ? 'opacity-100 translate-y-0'

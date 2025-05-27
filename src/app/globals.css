@@ -54,14 +54,6 @@ body {
   animation: fade-in-up 0.4s ease forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  .services
-    .flex.flex-col.gap-y-2.items-center.text-center.transition-all.duration-700.ease-out.transform.opacity-100.translate-y-0
-    img {
-    filter: invert(1);
-  }
-}
-
 img {
   object-fit: cover;
 }
