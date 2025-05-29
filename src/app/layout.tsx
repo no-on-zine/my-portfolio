@@ -58,6 +58,20 @@ export default function RootLayout({
         {/* canonical */}
         <link rel="canonical" href="https://keitanakagawa.space/" />
 
+        {/* Google Fonts preconnect */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+
+        {/* Google Search Console verification */}
+        <meta
+          name="google-site-verification"
+          content="R6dJ_c8C0D28_FxbQgq8VzdvsPjcKpWkm5enNT2uZBo"
+        />
+
         {/* Google Analytics */}
         <script
           async
