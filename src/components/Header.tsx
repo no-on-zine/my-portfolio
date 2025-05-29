@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-4 px-5">
       <div className="flex items-center">
         <h1 className="text-xl font-bold">
           <Image
