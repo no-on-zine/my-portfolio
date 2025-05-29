@@ -45,6 +45,8 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
@@ -65,6 +67,12 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-touch-icon.png"
+          sizes="180x180"
+        />
 
         {/* Google Analytics */}
         <script
@@ -79,6 +87,34 @@ export default function RootLayout({
               gtag('js', new Date());
               gtag('config', 'G-2SGWQRGK84');
             `,
+          }}
+        />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Keita Nakagawa',
+              url: 'https://keitanakagawa.space',
+              image: 'https://keitanakagawa.space/og-image.jpg', // 適切なプロフィール画像URLに変更可
+              sameAs: [
+                'https://twitter.com/nakagawakeita',
+                'https://github.com/no-on-zine',
+                'https://www.instagram.com/nakagawakeita',
+              ],
+              jobTitle: 'Web Designer / Front-end Developer / Photographer',
+              worksFor: {
+                '@type': 'Organization',
+                name: 'Freelance',
+              },
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Fukuoka',
+                addressCountry: 'JP',
+              },
+            }),
           }}
         />
       </head>
