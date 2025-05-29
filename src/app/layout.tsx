@@ -1,4 +1,5 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import { Oswald } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -10,12 +11,14 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://keitanakagawa.space'),
   title: 'Keita Nakagawa | Web Designer, Front-end Developer & Photographer',
   description:
     'A multidisciplinary creative specializing in web design, front-end development, direction, and photography. Based in Fukuoka & Casablanca. English & Japanese OK.',
   icons: {
     icon: '/favicon.ico',
   },
+
   openGraph: {
     title: 'Keita Nakagawa | Web Designer, Front-end Developer & Photographer',
     description:
@@ -24,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Keita Nakagawa Portfolio',
     images: [
       {
-        url: '/og-image.jpg', // 必要なら画像をpublicディレクトリに
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Keita Nakagawa Portfolio',
@@ -37,7 +40,7 @@ export const metadata: Metadata = {
     title: 'Keita Nakagawa Portfolio',
     description:
       'Web designer, front-end developer & photographer based in Fukuoka & Casablanca.',
-    site: '@nakagawakeita', // 任意で差し替え
+    site: '@nakagawakeita',
     creator: '@nakagawakeita',
     images: ['/og-image.jpg'],
   },
@@ -45,7 +48,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
   themeColor: '#ffffff',
 };
 
@@ -74,22 +82,7 @@ export default function RootLayout({
           sizes="180x180"
         />
 
-        {/* Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-2SGWQRGK84"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-2SGWQRGK84');
-            `,
-          }}
-        />
-
+        {/* JSON-LD 構造化データ */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -98,7 +91,7 @@ export default function RootLayout({
               '@type': 'Person',
               name: 'Keita Nakagawa',
               url: 'https://keitanakagawa.space',
-              image: 'https://keitanakagawa.space/og-image.jpg', // 適切なプロフィール画像URLに変更可
+              image: 'https://keitanakagawa.space/og-image.jpg',
               sameAs: [
                 'https://twitter.com/nakagawakeita',
                 'https://github.com/no-on-zine',
@@ -122,6 +115,24 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+
+        {/* Google Analytics scripts - afterInteractive */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-2SGWQRGK84"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-2SGWQRGK84');
+            `,
+          }}
+        />
       </body>
     </html>
   );
