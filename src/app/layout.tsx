@@ -66,12 +66,6 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Google Search Console verification */}
-        <meta
-          name="google-site-verification"
-          content="R6dJ_c8C0D28_FxbQgq8VzdvsPjcKpWkm5enNT2uZBo"
-        />
-
         {/* Google Analytics */}
         <script
           async
