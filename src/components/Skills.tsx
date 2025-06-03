@@ -12,7 +12,7 @@ const skills = [
   {
     title: 'Development',
     description:
-      'HTML, SCSS, JavaScript, React, Tailwind CSS, TypeScript, Next.js, Node.js',
+      'HTML, SCSS, JavaScript, React, Tailwind CSS, TypeScript, Next.js, Liquid, Node.js',
   },
   {
     title: 'CMS & Platforms',
