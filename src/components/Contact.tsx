@@ -3,11 +3,12 @@
 import { useInView } from '@/hooks/useInView';
 
 export default function Contact() {
-  const elements = {
-    title: useInView<HTMLHeadingElement>(),
-    text: useInView<HTMLParagraphElement>(),
-    form: useInView<HTMLAnchorElement>(),
-  };
+  const { ref: titleRef, isInView: titleInView } =
+    useInView<HTMLHeadingElement>();
+  const { ref: textRef, isInView: textInView } =
+    useInView<HTMLParagraphElement>();
+  const { ref: formRef, isInView: formInView } =
+    useInView<HTMLAnchorElement>();
 
   const socialIcons = [
     {
@@ -77,9 +78,9 @@ export default function Contact() {
   return (
     <section className="contact mx-auto py-15 px-10">
       <h2
-        ref={elements.title.ref}
+        ref={titleRef}
         className={`flex justify-center text-[clamp(50px,10vw,70px)] font-bold mb-6 transition-all duration-700 ease-out transform ${
-          elements.title.isInView
+          titleInView
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-6'
         }`}
@@ -90,9 +91,9 @@ export default function Contact() {
 
       <div className="flex flex-col items-center gap-10">
         <p
-          ref={elements.text.ref}
+          ref={textRef}
           className={`text-justify whitespace-pre-line transition-all duration-700 ease-out transform ${
-            elements.text.isInView
+            textInView
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-6'
           }`}
@@ -105,12 +106,9 @@ export default function Contact() {
         </p>
 
         <a
-          ref={
-            elements.form
-              .ref as React.MutableRefObject<HTMLAnchorElement | null>
-          }
+          ref={formRef}
           className={`cursor-pointer px-5 py-2 border rounded-xl w-44 h-12 shadow hover:shadow-lg hover:opacity-50 transition-all duration-700 ease-out transform flex justify-center items-center ${
-            elements.form.isInView
+            formInView
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-6'
           }`}
