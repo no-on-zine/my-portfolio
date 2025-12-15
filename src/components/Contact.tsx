@@ -7,8 +7,7 @@ export default function Contact() {
     useInView<HTMLHeadingElement>();
   const { ref: textRef, isInView: textInView } =
     useInView<HTMLParagraphElement>();
-  const { ref: formRef, isInView: formInView } =
-    useInView<HTMLAnchorElement>();
+  const { ref: formRef, isInView: formInView } = useInView<HTMLAnchorElement>();
 
   const socialIcons = [
     {
@@ -80,9 +79,7 @@ export default function Contact() {
       <h2
         ref={titleRef}
         className={`flex justify-center text-[clamp(50px,10vw,70px)] font-bold mb-6 transition-all duration-700 ease-out transform ${
-          titleInView
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-6'
+          titleInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
         }`}
         style={{ transitionDelay: '0s' }}
       >
@@ -93,9 +90,7 @@ export default function Contact() {
         <p
           ref={textRef}
           className={`text-justify whitespace-pre-line transition-all duration-700 ease-out transform ${
-            textInView
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-6'
+            textInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
           style={{ transitionDelay: '0.1s' }}
         >
@@ -108,9 +103,7 @@ export default function Contact() {
         <a
           ref={formRef}
           className={`cursor-pointer px-5 py-2 border rounded-xl w-44 h-12 shadow hover:shadow-lg hover:opacity-50 transition-all duration-700 ease-out transform flex justify-center items-center ${
-            formInView
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-6'
+            formInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
           href="https://forms.gle/sm9y1dhYUroZcpeV6"
           target="_blank"
